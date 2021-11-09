@@ -1,115 +1,191 @@
 
 import './App.css';
+import {useState} from 'react';
 
 export default function App() {
   const movies = [
-    {
-      name: "Alaipayuthey",
+     {
+       name: "Alaipayuthey",
       pic:
-        "https://upload.wikimedia.org/wikipedia/en/thumb/9/99/Alaipayuthey.jpg/220px-Alaipayuthey.jpg",
-      IMDb: "8.3/10",
-      Summary:
+         "https://upload.wikimedia.org/wikipedia/en/thumb/9/99/Alaipayuthey.jpg/220px-Alaipayuthey.jpg",
+       ratings: "8.3",
+       summary:
         "Karthik and Shakti marry against the wishes of their families and start their new life. However, they soon realise that marriage is not the bed of roses they had imagined it would be.",
-         },
+    },
     {
       name: "Thalapathy",
       pic:
-        "data:image/jpeg;base64,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",
-      IMDb: "8.5/10",
-      Summary:
-        "Surya, a courageous man who was raised in the slums, fights for the rights of the poor. However, he becomes friends with Deva who hires him as his commander and changes his life completely.",
-      
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYcKS7ap6h4O-W-jcDSLxTrwvGXeZS8vNuKA&usqp=CAU",
+      ratings: "8.5/10",
+      summary:
+        "Surya, a courageous man who was raised in the slums, fights for the rights of the poor. However, he becomes friends with Deva who hires him as his commander and changes his life completely.",  
     },
     {
       name: "Super Deluxe",
       pic:
         "https://upload.wikimedia.org/wikipedia/en/thumb/a/a1/Super_Deluxe_film_poster.jpg/220px-Super_Deluxe_film_poster.jpg",
-      IMDb: "8.4/10",
-      Summary:
-        "An unfaithful wife, an angry boy, and a transgender woman must all face their demons on one fateful day in a city of contradictions.",
-      
+      ratings: "8.4/10",
+      summary:
+        "An unfaithful wife, an angry boy, and a transgender woman must all face their demons on one fateful day in a city of contradictions.",      
     },
     {
       name: "Kammatti Paadam",
       pic:
         "https://upload.wikimedia.org/wikipedia/en/2/2a/Kammatipaadam_poster.jpg",
-      IMDb: "8.1/10",
-      Summary:
-        "Krishnan, who is working in Mumbai, returns to Kammattippaadam after his childhood friend, Ganga, calls for help. There, they find themselves in danger as their criminal past comes back to haunt them.",
-      
+      ratings: "8.1/10",
+      summary:
+        "Krishnan, who is working in Mumbai, returns to Kammattippaadam after his childhood friend, Ganga, calls for help. There, they find themselves in danger as their criminal past comes back to haunt them.",     
     },
     {
       name: "The Shawshank Redemption",
       pic: "https://upload.wikimedia.org/wikipedia/en/8/81/ShawshankRedemptionMoviePoster.jpg",
-      IMDb: "9.3/10",
-      Summary:
+      ratings: "9.3/10",
+      summary:
         "Andy Dufresne, a successful banker, is arrested for the murders of his wife and her lover, and is sentenced to life imprisonment at the Shawshank prison. He becomes the most unconventional prisoner.",
     },
     {
       name: "The Pursuit of Happyness",
       pic:
         "https://upload.wikimedia.org/wikipedia/en/thumb/8/81/Poster-pursuithappyness.jpg/220px-Poster-pursuithappyness.jpg",
-      IMDb: "8/10",
-      Summary:
+      ratings: "8/10",
+      summary:
         "Tired of Chris's professional failures, his wife decides to separate, leaving him financially broke with an unpaid internship in a brokerage firm and his son's custody to deal with.",
       },
     {
       name: "No Country for Old Men",
       pic:
         "https://upload.wikimedia.org/wikipedia/en/8/8b/No_Country_for_Old_Men_poster.jpg",
-      IMDb: "8.1/10",
-      Summary:
-        "A hunter's life takes a drastic turn when he discovers two million dollars while strolling through the aftermath of a drug deal. He is then pursued by a psychopathic killer who wants the money.",
-      
+      ratings: "8.1/10",
+      summary:
+        "A hunter's life takes a drastic turn when he discovers two million dollars while strolling through the aftermath of a drug deal. He is then pursued by a psychopathic killer who wants the money.",     
     },
-   
-     {
-      name: "Lagaan",
-      pic:
-        "https://upload.wikimedia.org/wikipedia/en/thumb/b/b6/Lagaan.jpg/220px-Lagaan.jpg",
-      IMDb: "8.1/10",
-      Summary:
-        "During the British Raj, a farmer named Bhuvan accepts the challenge of Captain Andrew Russell to beat his team in a game of cricket and enable his village to not pay taxes for the next three years.",
-          },
-
-          {
+    {
+    name: "The Notebook",
+                  pic:
+                    "https://upload.wikimedia.org/wikipedia/en/8/86/Posternotebook.jpg",
+                  ratings: "7.8/10",
+                  summary:
+                    "Duke reads the story of Allie and Noah, two lovers who were separated by fate, to Ms Hamilton, an old woman who suffers from dementia, on a daily basis out of his notebook.",
+                      },   
+             {
             name: "Rang De Basanti",
             pic:
               "https://upload.wikimedia.org/wikipedia/en/thumb/0/08/Rang_De_Basanti_poster.jpg/220px-Rang_De_Basanti_poster.jpg",
-            IMDb: "8.1/10",
-            Summary:
+            ratings: "8.1/10",
+            summary:
               "When Sue selects a few students to portray various Indian freedom fighters in her film, she unwittingly awakens their patriotism. The emotional and mental process turns them into rebels for a cause.",
                 },
+                {
+                  name: "Pink",
+                  pic:
+                    "https://upload.wikimedia.org/wikipedia/en/thumb/a/ae/Pinkmovieposter.jpg/220px-Pinkmovieposter.jpg",
+                  ratings: "8.1/10",
+                  summary:
+                    "After being molested, Minal, along with her friends, tries to file an FIR against a politician's nephew. When the subsequent case gets rigged, Deepak, a retired lawyer, helps them to fight the case.",
+                      },
+                      {
+                        name: "Jai Bhim",
+                        pic:
+                          "https://upload.wikimedia.org/wikipedia/en/thumb/a/ad/Jai_Bhim_film_poster.jpg/220px-Jai_Bhim_film_poster.jpg",
+                        ratings: "9.6/10",
+                        summary:
+                          "A pregnant woman from a primitive tribal community, searches desperately for her husband, who is missing from police custody. A High Court advocate rises in support to find her husband and seek justice for them.",
+                            },
+        
+                            {
+                                name: "Sudani from Nigeria",
+                                pic:
+                                  "https://upload.wikimedia.org/wikipedia/en/thumb/e/ec/Sudani_from_Nigeria_poster.jpg/220px-Sudani_from_Nigeria_poster.jpg",
+                                ratings: "8.2/10",
+                                summary:
+                                  "Majeed, a football manager, recruits three Nigerian footballers for his team. When Samuel, one of the players, is injured, Majeed lets him stay at his house and over time, they develop a close bond.",
+                                    },
+                             
   ];
-  return (
-    <div className="App">
-      {movies.map((ur) => (
-        <Msg
-          name={ur.name}
-          pic={ur.pic}
-          IMDb={ur.IMDb}
-          Summary={ur.Summary}
-                  />
-      ))}
-    </div>
-  );
-}
 
-function Msg({ name, pic, IMDb, Summary}) {
-  return (
-    <div>
-      <div className="container">
-        <div className="withimg">
-         <img className="poster" src={pic} alt={name} />
-        </div>
-        <p className="para">
-          <b> Summary : </b>
-          {Summary}
-          <span> IMDb Ratings : {IMDb}</span>
-          
-        </p>
+return (
+  <div className="App">
+
+       {/* <Counter /> */}
+   <MovieList movies={movies}/>
       </div>
+        );
+
+      }
+
+
+
+function Counter() {
+
+  //let like=10;
+  //const [state,setState]=useState(InitialValue);
+
+  const [like,setLike] = useState(0);
+  const [dislike,setDislike] = useState(0);
+  return ( 
+    <div className="counter-container">
+      <button class="like-unlike" onClick={()=>{ setLike(like+1);}}>👍{like} </button>
+      <button class="like-unlike" onClick={()=>{ setDislike(dislike+1);}}>👎{dislike}</button> 
     </div>
+
+  );
+}
+function MovieList({movies}) {
+  return(
+<section className="movie-list">
+{movies.map(({name,ratings,summary,pic})=>(
+  <Movie 
+  name = {name}
+  ratings={ratings}
+  summary={summary}
+  pic={pic}
+  />
+
+))
+}
+
+</section>
+  )}
+
+
+function Movie({name,ratings,summary,pic}) {
+  return (
+  <div className="movie-container">
+    <img 
+    src={pic}
+    alt={name} 
+    className="movie-poster"/>
+    <div className="movie-specs">
+     <h3 className="movie-name">{name}</h3>
+    <p className="movie-rating">⭐{ratings}</p>
+    </div>
+    <p class = "movie-summary">{summary}</p>
+    <Counter />
+   
+  </div>
   );
 }
 
+// *************************************************************************************************************************
+// *************************************************************************************************************************
+
+/*{/* {movies.map((mv)=>(
+         <Movie 
+         name = {mv.name}
+         ratings={mv.ratings}
+         summary={mv.summary}
+         pic={mv.pic}
+         /> 
+
+        {/*destructured map } */
+
+        //import {useState} from 'react'
+ //Hook is a function - starts with 'use'     
+
+ // like=like+1;
+        // console.log(like);
+
+         // like=like+1;
+        // console.log(like);
+
+         {/* <p>{like}</p> */}
