@@ -1,6 +1,6 @@
 
 import './App.css';
-import { Switch, Route, Link } from "react-router-dom";
+import { Switch, Route, Link,Redirect } from "react-router-dom";
 import { MovieList } from './MovieList';
 import { AddColor } from './AddColor';
 import {useState} from 'react';
@@ -123,9 +123,16 @@ return (
     <Link to="/color-game">Color Game</Link>
     </nav>
     <Switch>
-      
-      <Route path="/movies">
-        <MovieList movies={movies}/>
+    <Route exact path="/">
+        <Welcome/>
+      </Route>
+
+      <Route path="/films">
+        <Redirect to="/movies"/>
+          </Route>
+      <Route path="/movies/:id">Movie details</Route>
+      <Route path="/movies"> 
+         <MovieList movies={movies}/>
       </Route>
 
       <Route path="/add-movies"><AddMovie 
@@ -136,14 +143,26 @@ return (
        <AddColor/>
       </Route>
 
-      <Route path="/">
-        <Welcome/>
+      <Route path="***">
+       <NotFound />
       </Route>
-      </Switch>
+
+       </Switch>
   
   </div>
         );
       }
+
+function NotFound() {
+  return (
+    <div className="not-found-container">
+      <h2>Not Found 404</h2>
+      <img className="not-found-image" 
+      src="https://freefrontend.com/assets/img/html-funny-404-pages/CodePen-404-Page.gif" 
+      alt="Page Not Found"></img>
+    </div>
+  )
+}
 
 function Welcome() {
   return(
