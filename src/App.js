@@ -1,8 +1,10 @@
 
 import './App.css';
+import { Switch, Route, Link } from "react-router-dom";
 import { MovieList } from './MovieList';
 import { AddColor } from './AddColor';
 import {useState} from 'react';
+import "./App.css";
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 
@@ -114,13 +116,41 @@ const [movies,setMovies]=useState(Initial_movies);
 
 return (
   <div className="App">
-    
-      <AddMovie movies={movies} setMovies={setMovies}/>
-   <MovieList movies={movies} />
-   {/* <AddColor/> */}
-      </div>
+    <nav>
+    <Link to="/">Home</Link>
+    <Link to="/movies">Movies</Link>
+    <Link to="/add-movies">Add Movies</Link>
+    <Link to="/color-game">Color Game</Link>
+    </nav>
+    <Switch>
+      
+      <Route path="/movies">
+        <MovieList movies={movies}/>
+      </Route>
+
+      <Route path="/add-movies"><AddMovie 
+      movies={movies} setMovies={setMovies}/>
+      </Route>
+
+      <Route path="/color-game">
+       <AddColor/>
+      </Route>
+
+      <Route path="/">
+        <Welcome/>
+      </Route>
+      </Switch>
+  
+  </div>
         );
       }
+
+function Welcome() {
+  return(
+    <h2>Welcome to Git Movies</h2>
+  );
+}
+
 
 function AddMovie({movies,setMovies}) {
 const [name,setName] = useState("");

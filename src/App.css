@@ -98,3 +98,12 @@
   font-size: 50px;
   font-weight: bolder;
 }
+
+nav {
+  display: flex;
+  font-size: 32px;
+  gap: 24px;
+  margin: 24px;
+  font-weight: bold;
+ 
+}
