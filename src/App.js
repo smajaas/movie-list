@@ -1,12 +1,14 @@
 
 import './App.css';
-import { Switch, Route, Link,Redirect,useParams} from "react-router-dom";
+import { Switch, Route, Link,Redirect} from "react-router-dom";
 import { MovieList } from './MovieList';
 import { AddColor } from './AddColor';
 import {useState} from 'react';
 import "./App.css";
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
+import { NotFound } from './NotFound';
+import { Welcome } from './Welcome';
+import { MovieDetails } from './MovieDetails';
+import { AddMovie } from './AddMovie';
 
 export default function App() {
   const Initial_movies = [
@@ -138,9 +140,12 @@ return (
       <Route path="/films">
         <Redirect to="/movies"/>
           </Route>
-      <Route path="/movies/:id">
+      <Route path="/movies/edit/:id">Edit Movies</Route>
+
+       <Route path="/movies/:id">
        <MovieDetails movies={movies}/>
        </Route>
+
 
       <Route path="/movies"> 
          <MovieList movies={movies} setMovies={setMovies}/>
@@ -163,100 +168,5 @@ return (
   </div>
         );
       }
-
-function MovieDetails({movies}) {
-  const {id} = useParams();
-  const movie=movies[id];
-  console.log(movie);
-  const styles = {
-    color: movie.ratings < 8 ? "red" : "green",
-    fontWeight: "bold",
-  };
-
-  return (
-    <div>
-       <iframe 
-      width="70%" 
-      height="500" 
-      src={movie.trailer} 
-      title="YouTube video player" 
-      frameborder="0" 
-      allow="accelerometer; autoplay; clipboard-write; 
-      encrypted-media; gyroscope; picture-in-picture" 
-      allowfullscreen>
-
-      </iframe>
-
-    <div className="movie-detail-container">
-     
-             
-      <div className="movie-specs">
-        <h3 className="movie-name">{movie.name}
-     
-        </h3>
-        <p className="movie-rating" style={styles}>⭐{movie.ratings}
-        </p>
-      </div>
-    
-      <p className="movie-summary">{movie.summary}</p>   
-    </div>
-    </div>
-
-  )
-}
-
-function NotFound() {
-  return (
-    <div className="not-found-container">
-      <h2>Not Found 404</h2>
-      <img className="not-found-image" 
-      src="https://freefrontend.com/assets/img/html-funny-404-pages/CodePen-404-Page.gif" 
-      alt="Page Not Found"></img>
-    </div>
-  )
-}
-
-function Welcome() {
-  return(
-    <h2>Welcome to Git Movies</h2>
-  );
-}
-
-
-function AddMovie({movies,setMovies}) {
-const [name,setName] = useState("");
-const [pic,setPoster] = useState("");
-const [ratings,setRating] = useState("");
-const [summary,setSummary] = useState("");
-
-const addMovie=()=> {
-  console.log("Adding movies...",name,pic,ratings,summary);
-  const newMovie = {name:name, pic:pic, ratings:ratings, summary:summary};
-
-console.log(newMovie);
-setMovies([...movies,newMovie]);
-};
-
-  return (
-    <div className="add-movie-form">
-    <TextField value={name} onChange={(event) => setName(event.target.value)}
-        label="Name" variant="filled" />
-
-<TextField value={pic} onChange={(event) => setPoster(event.target.value)}
-        label="Image" variant="filled" />
-
-<TextField value={ratings} onChange={(event) => setRating(event.target.value)}
-        label="Rating" variant="filled" />
-
-<TextField value={summary} onChange={(event) => setSummary(event.target.value)}
-        label="Summary" variant="filled" />
-         <Button className="add-button" onClick={addMovie} variant="contained" color="secondary">
-           Add Movie
-           </Button>
-
-        </div>
-
-  )
-}
 
 

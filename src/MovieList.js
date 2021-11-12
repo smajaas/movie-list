@@ -9,9 +9,11 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import InfoIcon from '@mui/icons-material/Info';
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
+import { useHistory } from "react-router-dom";
 
 
 export function MovieList({ movies,setMovies }) {
+  const history = useHistory();
   return (
     <section className="movie-list">
       {movies.map(({ name, ratings, summary, pic} ,index) => (
@@ -31,7 +33,7 @@ export function MovieList({ movies,setMovies }) {
               setMovies(remainingMovies);
             } } 
             className="movie-show-button" 
-            aria-label="Delete Movie" 
+            aria-label="delete movie" 
             color="error">
                 
             <DeleteTwoToneIcon />
@@ -39,9 +41,9 @@ export function MovieList({ movies,setMovies }) {
            }
            editButton={
              <IconButton 
-            onClick={() => {} } 
+            onClick={() => history.push("/movies/edit/" +index) } 
             className="movie-show-button" 
-            aria-label="Edit Movie" 
+            aria-label="edit movie" 
             color="primary">
           
             <EditTwoToneIcon />
