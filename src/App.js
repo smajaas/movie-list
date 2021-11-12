@@ -1,6 +1,6 @@
 
 import './App.css';
-import { Switch, Route, Link,Redirect } from "react-router-dom";
+import { Switch, Route, Link,Redirect,useParams} from "react-router-dom";
 import { MovieList } from './MovieList';
 import { AddColor } from './AddColor';
 import {useState} from 'react';
@@ -17,7 +17,8 @@ export default function App() {
        ratings: 8.3,
        summary:
         "Karthik and Shakti marry against the wishes of their families and start their new life. However, they soon realise that marriage is not the bed of roses they had imagined it would be.",
-    },
+    trailer:"https://www.youtube.com/embed/BRFdGc3ku-k",
+     },
     {
       name: "Thalapathy",
       pic:
@@ -25,6 +26,7 @@ export default function App() {
       ratings: 8.5,
       summary:
         "Surya, a courageous man who was raised in the slums, fights for the rights of the poor. However, he becomes friends with Deva who hires him as his commander and changes his life completely.",  
+    trailer:"https://www.youtube.com/embed/-MEJKs5m-cU",
     },
     {
       name: "Super Deluxe",
@@ -33,7 +35,8 @@ export default function App() {
       ratings: 8.4,
       summary:
         "An unfaithful wife, an angry boy, and a transgender woman must all face their demons on one fateful day in a city of contradictions.",      
-    },
+    trailer:"https://www.youtube.com/embed/3-Xq_Zz3nPA",
+      },
     {
       name: "Kammatti Paadam",
       pic:
@@ -41,6 +44,7 @@ export default function App() {
       ratings: 8.1,
       summary:
         "Krishnan, who is working in Mumbai, returns to Kammattippaadam after his childhood friend, Ganga, calls for help. There, they find themselves in danger as their criminal past comes back to haunt them.",     
+    trailer:"https://www.youtube.com/embed/I3Edox4wBYs",
     },
     {
       name: "The Shawshank Redemption",
@@ -56,6 +60,7 @@ export default function App() {
       ratings: 8,
       summary:
         "Tired of Chris's professional failures, his wife decides to separate, leaving him financially broke with an unpaid internship in a brokerage firm and his son's custody to deal with.",
+        trailer: "https://www.youtube.com/embed/DMOBlEcRuw8",
       },
     {
       name: "No Country for Old Men",
@@ -64,7 +69,8 @@ export default function App() {
       ratings: 8.1,
       summary:
         "A hunter's life takes a drastic turn when he discovers two million dollars while strolling through the aftermath of a drug deal. He is then pursued by a psychopathic killer who wants the money.",     
-    },
+    trailer:"https://www.youtube.com/embed/38A__WT3-o0",
+      },
     {
     name: "The Notebook",
                   pic:
@@ -72,7 +78,9 @@ export default function App() {
                   ratings: 7.8,
                   summary:
                     "Duke reads the story of Allie and Noah, two lovers who were separated by fate, to Ms Hamilton, an old woman who suffers from dementia, on a daily basis out of his notebook.",
-                      },   
+                  trailer:"https://www.youtube.com/embed/FC6biTjEyZw",    
+                  
+                  },   
              {
             name: "Rang De Basanti",
             pic:
@@ -130,9 +138,12 @@ return (
       <Route path="/films">
         <Redirect to="/movies"/>
           </Route>
-      <Route path="/movies/:id">Movie details</Route>
+      <Route path="/movies/:id">
+       <MovieDetails movies={movies}/>
+       </Route>
+
       <Route path="/movies"> 
-         <MovieList movies={movies}/>
+         <MovieList movies={movies} setMovies={setMovies}/>
       </Route>
 
       <Route path="/add-movies"><AddMovie 
@@ -152,6 +163,47 @@ return (
   </div>
         );
       }
+
+function MovieDetails({movies}) {
+  const {id} = useParams();
+  const movie=movies[id];
+  console.log(movie);
+  const styles = {
+    color: movie.ratings < 8 ? "red" : "green",
+    fontWeight: "bold",
+  };
+
+  return (
+    <div>
+       <iframe 
+      width="70%" 
+      height="500" 
+      src={movie.trailer} 
+      title="YouTube video player" 
+      frameborder="0" 
+      allow="accelerometer; autoplay; clipboard-write; 
+      encrypted-media; gyroscope; picture-in-picture" 
+      allowfullscreen>
+
+      </iframe>
+
+    <div className="movie-detail-container">
+     
+             
+      <div className="movie-specs">
+        <h3 className="movie-name">{movie.name}
+     
+        </h3>
+        <p className="movie-rating" style={styles}>⭐{movie.ratings}
+        </p>
+      </div>
+    
+      <p className="movie-summary">{movie.summary}</p>   
+    </div>
+    </div>
+
+  )
+}
 
 function NotFound() {
   return (

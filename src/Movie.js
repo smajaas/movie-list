@@ -11,7 +11,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import InfoIcon from '@mui/icons-material/Info';
 import { useHistory } from "react-router-dom";
 
-export function Movie({ name, ratings, summary, pic, id }) {
+export function Movie({ name, ratings, summary, pic, id,deleteButton,editButton }) {
 
   const [show, setShow] = useState(true);
   const history = useHistory();
@@ -64,7 +64,7 @@ export function Movie({ name, ratings, summary, pic, id }) {
 
       {/* <p style={summaryStyles} class = "movie-summary">{summary}</p> */}
       <CardActions>
-      <Counter />
+      <Counter /> {editButton} {deleteButton} 
       </CardActions>
       </CardContent>
       
