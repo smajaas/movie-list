@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import { useParams } from "react-router-dom";
+import { useParams, useHistory  } from "react-router-dom";
 
 export function EditMovie({ movies, setMovies }) {
+  const history = useHistory();
   const { id } = useParams();
   const movie = movies[id];
   console.log(id,movie);
+  
   const [name, setName] = useState(movie.name);
   const [pic, setPoster] = useState(movie.pic);
   const [ratings, setRating] = useState(movie.ratings);
@@ -23,6 +25,7 @@ export function EditMovie({ movies, setMovies }) {
     const copyMovieList=[...movies];
     copyMovieList[id]=updatedMovie;
     setMovies(copyMovieList);
+    history.push("/movies")
   };
 
   return (

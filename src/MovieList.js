@@ -40,7 +40,7 @@ export function MovieList({ movies,setMovies }) {
         </IconButton>
            }
            editButton={
-             <IconButton 
+             <IconButton style={{marginLeft:"auto"}}
             onClick={() => history.push("/movies/edit/" +index) } 
             className="movie-show-button" 
             aria-label="edit movie" 
