@@ -1,20 +1,28 @@
 import { useState } from 'react';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import { useParams } from "react-router-dom";
 
-export function AddMovie({ movies, setMovies }) {
-  const [name, setName] = useState("");
-  const [pic, setPoster] = useState("");
-  const [ratings, setRating] = useState("");
-  const [summary, setSummary] = useState("");
-  const [trailer, setTrailer] = useState("");
+export function EditMovie({ movies, setMovies }) {
+  const { id } = useParams();
+  const movie = movies[id];
+  console.log(id,movie);
+  const [name, setName] = useState(movie.name);
+  const [pic, setPoster] = useState(movie.pic);
+  const [ratings, setRating] = useState(movie.ratings);
+  const [summary, setSummary] = useState(movie.summary);
+  const [trailer, setTrailer] = useState(movie.trailer);
 
-  const addMovie = () => {
+  const editMovie = () => {
     // console.log("Adding movies...", name, pic, ratings, summary);
-    const newMovie = { name, pic, ratings, summary, trailer };
+    const updatedMovie = { name, pic, ratings, summary, trailer };
 
-    console.log(newMovie);
-    setMovies([...movies, newMovie]);
+    console.log(updatedMovie);
+    // setMovies([...movies, updatedMovie]);
+
+    const copyMovieList=[...movies];
+    copyMovieList[id]=updatedMovie;
+    setMovies(copyMovieList);
   };
 
   return (
@@ -34,7 +42,7 @@ export function AddMovie({ movies, setMovies }) {
 <TextField value={trailer} onChange={(event) => setTrailer(event.target.value)}
         label="Trailer" variant="filled" />
 
-      <Button className="add-button" onClick={addMovie} variant="contained" color="secondary">
+      <Button onClick={editMovie} variant="contained" color="secondary">
         Save
       </Button>
 

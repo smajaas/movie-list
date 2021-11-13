@@ -9,6 +9,7 @@ import { NotFound } from './NotFound';
 import { Welcome } from './Welcome';
 import { MovieDetails } from './MovieDetails';
 import { AddMovie } from './AddMovie';
+import { EditMovie } from './EditMovie';
 
 export default function App() {
   const Initial_movies = [
@@ -140,7 +141,9 @@ return (
       <Route path="/films">
         <Redirect to="/movies"/>
           </Route>
-      <Route path="/movies/edit/:id">Edit Movies</Route>
+
+      <Route path="/movies/edit/:id">
+        <EditMovie movies={movies} setMovies={setMovies} /></Route>
 
        <Route path="/movies/:id">
        <MovieDetails movies={movies}/>
@@ -151,15 +154,15 @@ return (
          <MovieList movies={movies} setMovies={setMovies}/>
       </Route>
 
-      <Route path="/add-movies"><AddMovie 
-      movies={movies} setMovies={setMovies}/>
+      <Route path="/add-movies">
+        <AddMovie movies={movies} setMovies={setMovies}/>
       </Route>
 
       <Route path="/color-game">
        <AddColor/>
       </Route>
 
-      <Route path="***">
+      <Route path="**">
        <NotFound />
       </Route>
 
