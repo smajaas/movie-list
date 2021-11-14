@@ -1,6 +1,6 @@
 
 import './App.css';
-import { Switch, Route, Link,Redirect} from "react-router-dom";
+import { Switch, Route, Link,Redirect, useHistory} from "react-router-dom";
 import { MovieList } from './MovieList';
 import { AddColor } from './AddColor';
 import {useState} from 'react';
@@ -10,6 +10,19 @@ import { Welcome } from './Welcome';
 import { MovieDetails } from './MovieDetails';
 import { AddMovie } from './AddMovie';
 import { EditMovie } from './EditMovie';
+import Button from '@mui/material/Button';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { light } from '@mui/material/styles/createPalette';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
+import Paper from '@mui/material/Paper';
+
 
 export default function App() {
   const Initial_movies = [
@@ -55,7 +68,9 @@ export default function App() {
       ratings: 9.3,
       summary:
         "Andy Dufresne, a successful banker, is arrested for the murders of his wife and her lover, and is sentenced to life imprisonment at the Shawshank prison. He becomes the most unconventional prisoner.",
-    },
+    trailer:"https://www.youtube.com/embed/P9mwtI82k6E",
+    
+      },
     {
       name: "The Pursuit of Happyness",
       pic:
@@ -91,7 +106,8 @@ export default function App() {
             ratings: 8.1,
             summary:
               "When Sue selects a few students to portray various Indian freedom fighters in her film, she unwittingly awakens their patriotism. The emotional and mental process turns them into rebels for a cause.",
-                },
+               trailer:"https://www.youtube.com/embed/QHhnhqxB4E8",
+             },
                 {
                   name: "Pink",
                   pic:
@@ -99,7 +115,9 @@ export default function App() {
                   ratings: 8.1,
                   summary:
                     "After being molested, Minal, along with her friends, tries to file an FIR against a politician's nephew. When the subsequent case gets rigged, Deepak, a retired lawyer, helps them to fight the case.",
-                      },
+                  trailer:"https://www.youtube.com/embed/AL2TShb6fFs",    
+                  
+                  },
                       {
                         name: "Jai Bhim",
                         pic:
@@ -107,7 +125,8 @@ export default function App() {
                         ratings: 9.6,
                         summary:
                           "A pregnant woman from a primitive tribal community, searches desperately for her husband, who is missing from police custody. A High Court advocate rises in support to find her husband and seek justice for them.",
-                            },
+                        trailer:"https://www.youtube.com/embed/Gc6dEDnL8JA",    
+                        },
         
                             {
                                 name: "Sudani from Nigeria",
@@ -116,24 +135,48 @@ export default function App() {
                                 ratings: 8.2,
                                 summary:
                                   "Majeed, a football manager, recruits three Nigerian footballers for his team. When Samuel, one of the players, is injured, Majeed lets him stay at his house and over time, they develop a close bond.",
-                                    },
-                             
+                                  
+                             trailer:"https://www.youtube.com/embed/EHyaTJGmN4k",
+                                  },
   ];
 
-
-
 const [movies,setMovies]=useState(Initial_movies);
+const history = useHistory();
+const [mode,setMode] =useState("dark");
 
+const theme = createTheme({
+  palette: {
+    mode: mode,
+  },
+});
+  
 
 return (
-  <div className="App">
-    <nav>
-    <Link to="/">Home</Link>
-    <Link to="/movies">Movies</Link>
-    <Link to="/add-movies">Add Movies</Link>
-    <Link to="/color-game">Color Game</Link>
-    </nav>
-    <Switch>
+    <ThemeProvider theme={theme}>
+      <Paper elevation={5} style={{borderRadius:"0px", minHeight:"100vh"}}>
+    <div className="App">
+
+<AppBar position="static" style={{marginBottom:"26px",height:"50px"}}>
+  <Toolbar variant="dense">
+  <Button variant="text" color="inherit" onClick={()=>history.push("/")}>Home</Button>
+
+    <Button variant="text" color="inherit" onClick={()=>history.push("/movies")}>Movies</Button>
+  
+  <Button variant="text" color="inherit" onClick={()=>history.push("/add-movies")}>Add Movies</Button>
+  
+  <Button variant="text" color="inherit" onClick={()=>history.push("/color-game")}>Color Game</Button>
+
+  <Button 
+  startIcon = {mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+  style={{marginLeft: "auto"}} variant="text" color="inherit" 
+  onClick={()=> setMode (mode==="light" ? "dark" :"light")} 
+  >
+    {mode==="light" ? "Dark" : "Light"} mode 
+    </Button>
+    </Toolbar>
+</AppBar>
+
+       <Switch>
     <Route exact path="/">
         <Welcome/>
       </Route>
@@ -167,9 +210,11 @@ return (
       </Route>
 
        </Switch>
-  
+       
   </div>
-        );
+  </Paper>
+  </ThemeProvider>
+          );
       }
 
 
