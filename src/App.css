@@ -125,3 +125,31 @@ nav {
   padding: 30px;
   max-width: 80vh;
 }
+
+.game-box {
+  display: flex;
+  background-color: white;
+  color:black;
+  height:8rem;
+  width:8rem;
+  align-items: center;
+  justify-content: center;
+  font-size: 8rem;
+  border: 1px solid black;
+  cursor: pointer;
+}
+
+.board{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr );
+  width: min-content;
+}
+
+.full-game {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  align-items:center;
+  justify-content: center;
+}
