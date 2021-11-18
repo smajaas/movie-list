@@ -10,28 +10,43 @@ import InfoIcon from '@mui/icons-material/Info';
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 import { useHistory } from "react-router-dom";
+import {useState,useEffect} from 'react';
 
 
-export function MovieList({ movies,setMovies }) {
+export function MovieList() {
+
+  const [movies,setMovies]=useState([]);
+
+  const getMovies = ()=>{
+  
+      fetch("https://6166c4eb13aa1d00170a671d.mockapi.io/movies-list")
+      .then((data)=>data.json())
+      .then(mvs=>setMovies(mvs));
+    }
+useEffect(getMovies, []);
+
+const deleteMovie= (id) => {
+  fetch(
+  `https://6166c4eb13aa1d00170a671d.mockapi.io/movies-list/${id}`,
+  {
+  method:"DELETE",
+})
+.then(()=>getMovies());
+}; 
+
   const history = useHistory();
   return (
     <section className="movie-list">
-      {movies.map(({ name, ratings, summary, pic} ,index) => (
+      {movies.map(({ name, ratings, summary, pic,id} ,index) => (
         <Movie
           name={name}
           ratings={ratings}
           summary={summary}
           pic={pic} 
-          id={index}
+          id={id}
            deleteButton={ 
            <IconButton 
-            onClick={() => {
-              console.log("deleting index...",index);
-              const deleteIdx = index;
-              const remainingMovies=movies.filter((mv,idx)=>idx!==deleteIdx)
-              console.log("Remaining", remainingMovies);
-              setMovies(remainingMovies);
-            } } 
+            onClick={() => deleteMovie(id) }
             className="movie-show-button" 
             aria-label="delete movie" 
             color="error">
@@ -54,3 +69,6 @@ export function MovieList({ movies,setMovies }) {
     </section>
   );
 }
+
+
+  

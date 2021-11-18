@@ -3,7 +3,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { useHistory  } from "react-router-dom";
 
-export function AddMovie({ movies, setMovies }) {
+export function AddMovie() {
   const history = useHistory();
   const [name, setName] = useState("");
   const [pic, setPoster] = useState("");
@@ -16,9 +16,19 @@ export function AddMovie({ movies, setMovies }) {
     const newMovie = { name, pic, ratings, summary, trailer };
 
     console.log(newMovie);
-    setMovies([...movies, newMovie]);
-    history.push("/movies")
-  };
+    // setMovies([...movies, newMovie]);
+   
+
+    fetch(
+      `https://6166c4eb13aa1d00170a671d.mockapi.io/movies-list/`,
+      {
+      method:"POST",
+      body:JSON.stringify(newMovie),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+      }).then(()=>  history.push("/movies"));
+    };
 
   return (
     <div className="add-movie-form">
@@ -45,3 +55,4 @@ export function AddMovie({ movies, setMovies }) {
 
   );
 }
+

@@ -3,21 +3,20 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import { useHistory } from "react-router-dom";
-import { useEffect,useState } from "react";
+import { useState,useEffect } from "react";
 
 export function MovieDetails() {
   const history = useHistory();
   const { id } = useParams();
-  // const movie = movies[id];
-  console.log("th id is",id);
+  //const movie = movies[id];
+  console.log("the id is",id);
 
   const[movie,setMovie] = useState({});
   useEffect(() => {
-    fetch(`https://6166c4eb13aa1d00170a671d.mockapi.io/movies-list/${id}`, {
-      method:"GET",
-    })
+    fetch(`https://6166c4eb13aa1d00170a671d.mockapi.io/movies-list/${id}`)
     .then((data)=>data.json())
-    .then((mv)=>setMovie(mv));
+    .then(mv=>setMovie(mv));
+  
   }, []);
 
   console.log(movie);
