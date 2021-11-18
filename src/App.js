@@ -123,7 +123,7 @@ return (
   </ThemeProvider>
           );
       }
-
+//Created Tic Tac Toe game
 
 function TicTacToe() {
   const { width, height } = useWindowSize()
@@ -193,4 +193,3 @@ function GameBox({ onPlayerClick, val }) {
   );
 
 }
-
